@@ -1,0 +1,13 @@
+[
+    {
+      "key": "_MAILERS_KEY_",
+      "type": "smtp",
+      "options": {
+        "host": "_MAILERS_HOST_",
+        "port": "_MAILERS_PORT_",
+        "user": "_MAILERS_USER_",
+        "password": "_MAILERS_PASS_",
+        "protocol": "_MAILERS_PROT_"
+      }
+    }
+  ]

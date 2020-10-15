@@ -21,6 +21,7 @@ RUN yum install -y yum-utils python-pip && \
     yum remove -y yum-utils python-pip
 
 RUN yum install -y git && \
+    mkdir /var/www/html/ && \
     cd /var/www/html/ && \
     git clone https://github.com/phacility/libphutil.git && \
     git clone https://github.com/phacility/arcanist.git && \

@@ -24,11 +24,19 @@ RUN yum install -y git && \
     cd /var/www/html/ && \
     git clone https://github.com/phacility/libphutil.git && \
     git clone https://github.com/phacility/arcanist.git && \
-    git clone https://github.com/phacility/phabricator.git && \
-    yum remove -y git
+    git clone https://github.com/phacility/phabricator.git
 
 
 ADD asset/mailers.json /var/www/html/phabricator/.
+RUN mkdir /var/www/html/phabricator/webroot/upload && \
+    chown apache:apache /var/www/html/phabricator/webroot/upload
+
+RUN sed -i -e “s/post_max_size\ =\ 8M/post_max_size\ =\ 4096M/g” /etc/php.ini && \
+    echo “” >> /etc/php.ini && \
+    echo “[OPcache]” >> /etc/php.ini && \
+    echo “opcache.validate_timestamps = 1” >> /etc/php.ini && \
+    echo “opcache.revalidate_freq = 0” >> /etc/php.ini
+RUN mkdir /run/php-fpm/
 
 
 ADD asset/phabricator-entrypoint.sh .

@@ -30,7 +30,7 @@ RUN yum install -y git && \
 
 ADD asset/mailers.json /var/www/html/phabricator/.
 RUN mkdir /var/www/html/phabricator/webroot/upload && \
-    chown apache:apache /var/www/html/phabricator/webroot/upload
+    mkdir /var/www/html/phabricator/webroot/upload
 
 RUN sed -i -e “s/post_max_size\ =\ 8M/post_max_size\ =\ 4096M/g” /etc/php.ini && \
     echo “” >> /etc/php.ini && \

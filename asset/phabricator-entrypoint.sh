@@ -1,7 +1,27 @@
 #!/bin/bash
 
 
-mkdir /var/www/html/phabricator/webroot/upload
+test -z $MYSQL_HOST && MYSQL_HOST=127.0.0.1
+test -z $MYSQL_PORT && MYSQL_PORT=3306
+test -z $MYSQL_USER && MYSQL_USER=phabricator
+test -z $MYSQL_PASS && MYSQL_PASS=password
+test -z $HOST_NAME && HOST_NAME=test.local
+test -z $TIMEZONE && TIMEZONE=UTC
+test -z $MAILERS_KEY && MAILERS_KEY=SMTP
+test -z $MAILERS_HOST && MAILERS_HOST=127.0.0.1
+test -z $MAILERS_PORT && MAILERS_PORT=465
+test -z $MAILERS_USER && MAILERS_USER=root
+test -z $MAILERS_PASS && MAILERS_PASS=root
+test -z $MAILERS_PROT && MAILERS_PROT=SSL
+
+sed -i -e "s/_MAILERS_KEY_/$MAILERS_KEY/g" /var/www/html/phabricator/mailers.json
+sed -i -e "s/_MAILERS_HOST_/$MAILERS_HOST/g" /var/www/html/phabricator/mailers.json
+sed -i -e "s/_MAILERS_PORT_/$MAILERS_PORT/g" /var/www/html/phabricator/mailers.json
+sed -i -e "s/_MAILERS_USER_/$MAILERS_USER/g" /var/www/html/phabricator/mailers.json
+sed -i -e "s/_MAILERS_PASS_/$MAILERS_KEY/g" /var/www/html/phabricator/mailers.json
+sed -i -e "s/_MAILERS_PROT_/$MAILERS_PASS/g" /var/www/html/phabricator/mailers.json
+
+
 chown apache:apache /var/www/html/phabricator/webroot/upload
 chown apache:apache /var/repo/
 cd /var/www/html/phabricator/

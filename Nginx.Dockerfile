@@ -12,8 +12,6 @@ RUN yum install -y git && \
 
 
 ADD asset/phabricator.conf /etc/nginx/conf.d/.
-RUN mkdir /var/www/html/phabricator/webroot/upload && \
-    chown apache:apache /var/www/html/phabricator/webroot/upload
 
 
 ADD asset/nginx-entrypoint.sh .

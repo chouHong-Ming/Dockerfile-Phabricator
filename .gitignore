@@ -1,0 +1,8 @@
+example/mysql/*
+!example/mysql/.gitkeep
+example/repo/*
+!example/repo/.gitkeep
+example/upload/*
+!example/upload/.gitkeep
+
+example/docker-compose-ggit.yml

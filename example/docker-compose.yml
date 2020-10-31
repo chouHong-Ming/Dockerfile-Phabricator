@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  core:
+    image: chouhongming/phabricator-core:latest
+    ports:
+      - "22:22/tcp"
+      - "80:80/tcp"
+    links:
+      - database
+    volumes:
+      - ./repo:/var/repo
+      - ./upload:/var/www/html/phabricator/webroot/upload
+    environment:
+      - UPSTREAM=127.0.0.1
+      - MYSQL_HOST=database
+      - MYSQL_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_PASS=password
+      - HOST_NAME=test.local
+      - TIMEZONE=UTC
+      - MAILERS_KEY=SMTP
+      - MAILERS_HOST=smtp.gmail.com
+      - MAILERS_PORT=465
+      - MAILERS_USER=your-email@gmail.com
+      - MAILERS_PASS=your-password
+      - MAILERS_PROT=SSL
+  database:
+    image: percona:5.7-centos
+    ports: 
+      - "3306:3306/tcp"
+    volumes: 
+      - ./mysql:/var/lib/mysql
+    environment: 
+      - MYSQL_ROOT_PASSWORD=password
+    

@@ -10,6 +10,7 @@ services:
     volumes:
       - ./repo:/var/repo
       - ./upload:/var/www/html/phabricator/webroot/upload
+      - ./server_key:/server_key
     environment:
       - UPSTREAM=127.0.0.1
       - MYSQL_HOST=database

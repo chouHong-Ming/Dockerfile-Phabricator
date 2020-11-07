@@ -39,7 +39,7 @@ ADD asset/phabricator.conf /etc/nginx/conf.d/.
 
 RUN adduser git && \
     usermod -p NP git && \
-    echo "git ALL=(root) SETENV: NOPASSWD: /usr/bin/git-upload-pack, /usr/bin/git-receive-pack" >> /etc/sudoers
+    echo "git ALL=(root) SETENV: NOPASSWD: /usr/bin/git, /usr/bin/git-upload-pack, /usr/bin/git-receive-pack, /usr/bin/ssh, /usr/libexec/git-core/git-http-backend" >> /etc/sudoers
 
 RUN cp /var/www/html/phabricator/resources/sshd/phabricator-ssh-hook.sh /usr/lib/ && \
     sed -i -e "s/vcs-user/git/g" /usr/lib/phabricator-ssh-hook.sh && \
@@ -56,7 +56,8 @@ ADD asset/mailers.json /var/www/html/phabricator/.
 RUN mkdir -p /var/www/html/phabricator/webroot/upload && \
     mkdir -p /var/repo/
 
-RUN sed -i -e "s/post_max_size\ =\ 8M/post_max_size\ =\ 4096M/g" /etc/php.ini && \
+RUN echo "apache ALL=(root) SETENV: NOPASSWD: /usr/bin/git, /usr/bin/git-upload-pack, /usr/bin/git-receive-pack, /usr/bin/ssh, /usr/libexec/git-core/git-http-backend, /var/www/html/phabricator/phabricator/support/bin/git-http-backend" >> /etc/sudoers  && \
+    sed -i -e "s/post_max_size\ =\ 8M/post_max_size\ =\ 4096M/g" /etc/php.ini && \
     echo "" >> /etc/php.ini && \
     echo "[OPcache]" >> /etc/php.ini && \
     echo "opcache.validate_timestamps = 1" >> /etc/php.ini && \

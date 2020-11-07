@@ -28,8 +28,8 @@ sed -i -e "s/_MAILERS_KEY_/$MAILERS_KEY/g" /var/www/html/phabricator/mailers.jso
 sed -i -e "s/_MAILERS_HOST_/$MAILERS_HOST/g" /var/www/html/phabricator/mailers.json
 sed -i -e "s/\"_MAILERS_PORT_\"/$MAILERS_PORT/g" /var/www/html/phabricator/mailers.json
 sed -i -e "s/_MAILERS_USER_/$MAILERS_USER/g" /var/www/html/phabricator/mailers.json
-sed -i -e "s/_MAILERS_PASS_/$MAILERS_KEY/g" /var/www/html/phabricator/mailers.json
-sed -i -e "s/_MAILERS_PROT_/$MAILERS_PASS/g" /var/www/html/phabricator/mailers.json
+sed -i -e "s/_MAILERS_PASS_/$MAILERS_PASS/g" /var/www/html/phabricator/mailers.json
+sed -i -e "s/_MAILERS_PROT_/$MAILERS_PROT/g" /var/www/html/phabricator/mailers.json
 
 
 chown apache:apache /var/www/html/phabricator/webroot/upload
@@ -42,7 +42,7 @@ cd /var/www/html/phabricator/
 ./bin/config set phabricator.base-uri 'http://'$HOST_NAME
 ./bin/config set security.alternate-file-domain http://$HOST_NAME
 ./bin/config set phabricator.timezone $TIMEZONE
-./bin/config set environment.append-paths ‘["/usr/bin","/usr/local/bin","/usr/libexec/git-core"]’
+./bin/config set environment.append-paths '["/usr/bin","/usr/local/bin","/usr/libexec/git-core"]'
 ./bin/config set pygments.enabled true
 ./bin/config set phabricator.developer-mode true
 ./bin/config set storage.local-disk.path /var/www/html/phabricator/webroot/upload

@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   core:
-    image: chouhongming/phabricator-core:latest
+    image: chouhongming/phabricator:latest
     ports:
       - "22:22/tcp"
       - "80:80/tcp"

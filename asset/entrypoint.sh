@@ -16,10 +16,17 @@ test -z $MAILERS_USER && MAILERS_USER=root
 test -z $MAILERS_PASS && MAILERS_PASS=root
 test -z $MAILERS_PROT && MAILERS_PROT=SSL
 
-test -f /etc/ssh/ssh_host_rsa_key || ssh-keygen -A
-test -f /etc/ssh/ssh_host_dsa_key || ssh-keygen -A
-test -f /etc/ssh/ssh_host_ecdsa_key || ssh-keygen -A
-test -f /etc/ssh/ssh_host_ed25519_key || ssh-keygen -A
+
+echo "[Info] Set ssh config"
+if ! [ -f "/server_key/ssh_host_rsa_key" ] || ! [ -f "/server_key/ssh_host_dsa_key" ] || ! [ -f "/server_key/ssh_host_ecdsa_key" ] || ! [ -f "/server_key/ssh_host_ed25519_key" ]; then
+    echo "[Info] Generate ssh key"
+    ssh-keygen -A
+    sudo cp /etc/ssh/ssh_host_rsa_key* /etc/ssh/ssh_host_dsa_key* /etc/ssh/ssh_host_ecdsa_key* /etc/ssh/ssh_host_ed25519_key* /server_key/.
+else
+    echo "[Info] Copy exist ssh key"
+    sudo cp /server_key/* /etc/ssh/.
+fi
+
 
 sed -i -e "s/_HOST_NAME_/$HOST_NAME/g" /etc/nginx/conf.d/phabricator.conf 
 sed -i -e "s/_UPSTREAM_/$UPSTREAM/g" /etc/nginx/conf.d/phabricator.conf 

@@ -4,5 +4,7 @@ example/repo/*
 !example/repo/.gitkeep
 example/upload/*
 !example/upload/.gitkeep
+example/server_key/*
+!example/server_key/.gitkeep
 
 example/docker-compose-ggit.yml

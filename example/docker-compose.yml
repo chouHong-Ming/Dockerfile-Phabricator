@@ -12,6 +12,7 @@ services:
       - ./upload:/var/www/html/phabricator/webroot/upload
       - ./server_key:/server_key
     environment:
+      - HTTPS_ENABLE=true
       - UPSTREAM=127.0.0.1
       - MYSQL_HOST=database
       - MYSQL_PORT=3306

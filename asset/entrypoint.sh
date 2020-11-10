@@ -3,6 +3,7 @@
 
 test -z $UPSTREAM && UPSTREAM=127.0.0.1
 
+test -z $HTTPS_ENABLE $$ HTTPS_ENABLE=false
 test -z $MYSQL_HOST && MYSQL_HOST=127.0.0.1
 test -z $MYSQL_PORT && MYSQL_PORT=3306
 test -z $MYSQL_USER && MYSQL_USER=phabricator
@@ -46,8 +47,13 @@ cd /var/www/html/phabricator/
 ./bin/config set mysql.port $MYSQL_PORT
 ./bin/config set mysql.user $MYSQL_USER
 ./bin/config set mysql.pass $MYSQL_PASS
-./bin/config set phabricator.base-uri 'http://'$HOST_NAME
-./bin/config set security.alternate-file-domain http://$HOST_NAME
+if [ $HTTPS_ENABLE == "true" ]; then
+    ./bin/config set phabricator.base-uri 'https://'$HOST_NAME
+    ./bin/config set security.alternate-file-domain https://$HOST_NAME
+else
+    ./bin/config set phabricator.base-uri 'https://'$HOST_NAME
+    ./bin/config set security.alternate-file-domain https://$HOST_NAME
+fi
 ./bin/config set phabricator.timezone $TIMEZONE
 ./bin/config set environment.append-paths '["/usr/bin","/usr/local/bin","/usr/libexec/git-core"]'
 ./bin/config set pygments.enabled true

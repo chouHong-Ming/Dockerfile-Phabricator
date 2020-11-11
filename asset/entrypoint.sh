@@ -50,6 +50,7 @@ cd /var/www/html/phabricator/
 if [ $HTTPS_ENABLE == "true" ]; then
     ./bin/config set phabricator.base-uri 'https://'$HOST_NAME
     ./bin/config set security.alternate-file-domain https://$HOST_NAME
+    sed -i -e "s;// \$_SERVER;\$_SERVER;g" /var/www/html/phabricator/support/preamble.php
 else
     ./bin/config set phabricator.base-uri 'https://'$HOST_NAME
     ./bin/config set security.alternate-file-domain https://$HOST_NAME

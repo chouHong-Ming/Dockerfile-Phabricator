@@ -53,8 +53,10 @@ RUN cp /var/www/html/phabricator/resources/sshd/sshd_config.phabricator.example 
 
 
 ADD asset/mailers.json /var/www/html/phabricator/.
+ADD asset/preamble.php /var/www/html/phabricator/support/.
 RUN mkdir -p /var/www/html/phabricator/webroot/upload && \
     mkdir -p /var/repo/
+
 
 RUN echo "apache ALL=(root) SETENV: NOPASSWD: /usr/bin/git, /usr/bin/git-upload-pack, /usr/bin/git-receive-pack, /usr/bin/ssh, /usr/libexec/git-core/git-http-backend, /var/www/html/phabricator/phabricator/support/bin/git-http-backend" >> /etc/sudoers  && \
     sed -i -e "s/post_max_size\ =\ 8M/post_max_size\ =\ 4096M/g" /etc/php.ini && \

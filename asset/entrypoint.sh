@@ -2,6 +2,7 @@
 
 
 test -z $UPSTREAM && UPSTREAM=127.0.0.1
+test -z $TRUST_LAYER && TRUST_LAYER=0
 
 test -z $HTTPS_ENABLE $$ HTTPS_ENABLE=false
 test -z $MYSQL_HOST && MYSQL_HOST=127.0.0.1
@@ -43,6 +44,17 @@ sed -i -e "s/_MAILERS_PROT_/$MAILERS_PROT/g" /var/www/html/phabricator/mailers.j
 chown apache:apache /var/www/html/phabricator/webroot/upload
 chown apache:apache /var/repo/
 cd /var/www/html/phabricator/
+if [ $TRUST_LAYER == "0" ]; then
+    echo "[Info] Disable trust x forearded for header"
+elif [ $TRUST_LAYER == "1" ]; then
+    echo "[Info] Enable trust 1 layer x forearded for header"
+    sed -i -e "s;// preamble_trust_x_forwarded_for_header;preamble_trust_x_forwarded_for_header;g" /var/www/html/phabricator/support/preamble.php
+    sed -i -e "s;_TRUST_LAYER_;;g" /var/www/html/phabricator/support/preamble.php
+else
+    echo "[Info] Enable trust "$TRUST_LAYER" layers x forearded for header"
+    sed -i -e "s;// preamble_trust_x_forwarded_for_header;preamble_trust_x_forwarded_for_header;g" /var/www/html/phabricator/support/preamble.php
+    sed -i -e "s;_TRUST_LAYER_;$TRUST_LAYER;g" /var/www/html/phabricator/support/preamble.php
+fi
 ./bin/config set mysql.host $MYSQL_HOST
 ./bin/config set mysql.port $MYSQL_PORT
 ./bin/config set mysql.user $MYSQL_USER

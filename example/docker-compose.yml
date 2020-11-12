@@ -12,13 +12,14 @@ services:
       - ./upload:/var/www/html/phabricator/webroot/upload
       - ./server_key:/server_key
     environment:
+      - HOST_NAME=test.local
       - HTTPS_ENABLE=true
       - UPSTREAM=127.0.0.1
+      - TRUST_LAYER=0
       - MYSQL_HOST=database
       - MYSQL_PORT=3306
       - MYSQL_USER=root
       - MYSQL_PASS=password
-      - HOST_NAME=test.local
       - TIMEZONE=UTC
       - MAILERS_KEY=SMTP
       - MAILERS_HOST=smtp.gmail.com

@@ -4,7 +4,7 @@
 test -z $UPSTREAM && UPSTREAM=127.0.0.1
 test -z $TRUST_LAYER && TRUST_LAYER=0
 
-test -z $HTTPS_ENABLE $$ HTTPS_ENABLE=false
+test -z $HTTPS_ENABLE && HTTPS_ENABLE=false
 test -z $MYSQL_HOST && MYSQL_HOST=127.0.0.1
 test -z $MYSQL_PORT && MYSQL_PORT=3306
 test -z $MYSQL_USER && MYSQL_USER=phabricator
@@ -39,6 +39,12 @@ sed -i -e "s/\"_MAILERS_PORT_\"/$MAILERS_PORT/g" /var/www/html/phabricator/maile
 sed -i -e "s/_MAILERS_USER_/$MAILERS_USER/g" /var/www/html/phabricator/mailers.json
 sed -i -e "s/_MAILERS_PASS_/$MAILERS_PASS/g" /var/www/html/phabricator/mailers.json
 sed -i -e "s/_MAILERS_PROT_/$MAILERS_PROT/g" /var/www/html/phabricator/mailers.json
+
+
+if [ $(ls -l /etc/nginx/conf.d/add_conf/ | wc -l) -gt "1" ]; then
+    echo "[Info] Import Nginx additional conf for Phabricator"
+    sed -i -e "s;#include;include;g" /etc/nginx/conf.d/phabricator.conf
+fi
 
 
 chown apache:apache /var/www/html/phabricator/webroot/upload

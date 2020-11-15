@@ -6,5 +6,7 @@ example/upload/*
 !example/upload/.gitkeep
 example/server_key/*
 !example/server_key/.gitkeep
+example/nginx_conf/*
+!example/nginx_conf/.gitkeep
 
 example/docker-compose-ggit.yml

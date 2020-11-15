@@ -8,6 +8,7 @@ services:
     links:
       - database
     volumes:
+      - ./nginx_conf:/etc/nginx/conf.d/add_conf
       - ./repo:/var/repo
       - ./upload:/var/www/html/phabricator/webroot/upload
       - ./server_key:/server_key

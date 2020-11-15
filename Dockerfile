@@ -33,7 +33,8 @@ RUN yum install -y git && \
     git clone https://github.com/phacility/phabricator.git
 
 
-RUN sed -i -e "1i daemon off;" /etc/nginx/nginx.conf
+RUN sed -i -e "1i daemon off;" /etc/nginx/nginx.conf && \
+    mkdir -p /etc/nginx/conf.d/add_conf
 ADD asset/phabricator.conf /etc/nginx/conf.d/.
 
 

@@ -120,8 +120,11 @@ spec:
         imagePullPolicy: Always
         name: phabricator
         ports:
-        - containerPort: 3000
-          name: phabricator
+        - containerPort: 22
+          name: ssh
+          protocol: TCP
+        - containerPort: 80
+          name: web
           protocol: TCP
         resources: {}
         terminationMessagePath: /dev/termination-log
